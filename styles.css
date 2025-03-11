@@ -170,7 +170,12 @@ a:hover {
 }
 #fortune-generator {
     text-align: center;
-    margin: 2rem 0;
+    padding: 2rem;
+    margin: 1.5rem auto;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #fortune-box {
@@ -204,7 +209,12 @@ a:hover {
 }
 #stopwatch {
     text-align: center;
-    margin: 2rem 0;
+    padding: 2rem;
+    margin: 1.5rem auto;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #stopwatch-display {
@@ -229,7 +239,12 @@ a:hover {
 
 #todo-list {
     text-align: center;
-    margin: 2rem 0;
+    padding: 2rem;
+    margin: 1.5rem auto;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #todo-input {
