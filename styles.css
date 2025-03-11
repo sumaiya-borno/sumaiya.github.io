@@ -168,3 +168,37 @@ a:hover {
 .favorites-list li:hover {
     transform: translateX(10px);
 }
+#fortune-generator {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+#fortune-box {
+    background-color: #fff;
+    border: 2px solid #b8a9c9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 500px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+#fortune-controls {
+    margin-top: 1rem;
+}
+
+#fortune-controls button {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #b8a9c9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#fortune-controls button:hover {
+    background-color: #a2d5c6;
+}
