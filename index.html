@@ -102,6 +102,116 @@
 	
 
     <section id="stopwatch">
+    	<div id="stopwatch-display">00:00</div>
+    	<div id="stopwatch-controls">
+        	<button id="start-btn">Start</button>
+        	<button id="stop-btn">Stop</button>
+        	<button id="reset-btn">Reset</button>
+   	</div>
+
+    	<style>
+          #stopwatch {
+            text-align: center;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 500px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 2px solid #b8a9c9;
+          }
+
+          #stopwatch-display {
+            font-size: 3rem;
+            font-family: 'Georgia', serif;
+            color: #555555;
+            margin: 1rem 0;
+          }
+
+          #stopwatch-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1rem;
+          }
+
+          #stopwatch-controls button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          }
+
+          #start-btn {
+            background-color: #a2d5c6;
+            color: white;
+          }
+
+          #stop-btn {
+            background-color: #f4a7b9;
+            color: white;
+          }
+
+          #reset-btn {
+            background-color: #b8a9c9;
+            color: white;
+          }
+
+          #stopwatch-controls button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+          }
+    	</style>
+
+    	<script>
+        // Stopwatch functionality
+          let timer = null;
+          let seconds = 0;
+          const display = document.getElementById('stopwatch-display');
+          const startBtn = document.getElementById('start-btn');
+          const stopBtn = document.getElementById('stop-btn');
+          const resetBtn = document.getElementById('reset-btn');
+
+          function updateDisplay() {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            display.textContent = 
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+          }
+
+          startBtn.addEventListener('click', () => {
+            if (!timer) {
+                timer = setInterval(() => {
+                    seconds += 3; // Increment by 3 seconds
+                    if (seconds > 30) {
+                        clearInterval(timer);
+                        timer = null;
+                        seconds = 0;
+                    }
+                    updateDisplay();
+                }, 3000); // Update every 3 seconds (3000ms)
+	    }
+          });
+
+          stopBtn.addEventListener('click', () => {
+            clearInterval(timer);
+            timer = null;
+          });
+
+          resetBtn.addEventListener('click', () => {
+            clearInterval(timer);
+            timer = null;
+            seconds = 0;
+            updateDisplay();
+          });
+
+        // Initialize
+          updateDisplay();
+	</script>
+
     	<h2>Stopwatch</h2>
     	  <div id="stopwatch-display">00:00</div>
           <div id="stopwatch-controls">
