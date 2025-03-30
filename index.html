@@ -110,28 +110,268 @@
     	  </div>
     </section>
 	
+ <section id="stopwatch">
+	<h2>Stopwatch</h2>
+    	<div id="stopwatch-display">00:00</div>
+    	<div id="stopwatch-controls">
+        	<button id="start-btn">Start</button>
+        	<button id="stop-btn">Stop</button>
+        	<button id="reset-btn">Reset</button>
+   	</div>
+
+    	
+    	<script>
+        // Stopwatch functionality
+          let timer = null;
+          let seconds = 0;
+          const display = document.getElementById('stopwatch-display');
+          const startBtn = document.getElementById('start-btn');
+          const stopBtn = document.getElementById('stop-btn');
+          const resetBtn = document.getElementById('reset-btn');
+
+          function updateDisplay() {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            display.textContent = 
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+          }
+
+          startBtn.addEventListener('click', () => {
+            if (!timer) {
+                timer = setInterval(() => {
+                    seconds += 3; // Increment by 3 seconds
+                    if (seconds > 30) {
+                        clearInterval(timer);
+                        timer = null;
+                        seconds = 0;
+                    }
+                    updateDisplay();
+                }, 3000); // Update every 3 seconds (3000ms)
+	    }
+          });
+
+          stopBtn.addEventListener('click', () => {
+            clearInterval(timer);
+            timer = null;
+          });
+
+          resetBtn.addEventListener('click', () => {
+            clearInterval(timer);
+            timer = null;
+            seconds = 0;
+            updateDisplay();
+          });
+
+        // Initialize
+          updateDisplay();
+	</script>
+
+    <section>
+	    
     <section id="todo-list">
-    	<h2>To-Do List</h2>
-    	<div id="todo-input-container">
-        	<input type="text" id="todo-input" placeholder="Add a new task...">
-        	<button id="add-todo-btn">+</button>
-    	</div>
-    	<ul id="todo-items"></ul>
-    </section>
-	
-    <section id="fortune-generator">
-    	<h2>Fortune Generator</h2>
-    	<div id="fortune-box">
-        	<p id="fortune-text">Your fortune will appear here!</p>
-    	</div>
-    	<div id="fortune-controls">
-        	<button class="color-btn" id="red-btn"></button>
-        	<button class="color-btn" id="blue-btn"></button>
-        	<button class="color-btn" id="green-btn"></button>
-        	<button class="color-btn" id="yellow-btn"></button>
-    	</div>
+    <h2>To-Do List</h2>
+    <div id="todo-input-container">
+        <input type="text" id="todo-input" placeholder="Add a new task...">
+        <button id="add-todo-btn">+</button>
+    </div>
+    <ul id="todo-items"></ul>
+
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const todoInput = document.getElementById('todo-input');
+            const addBtn = document.getElementById('add-todo-btn');
+            const todoItems = document.getElementById('todo-items');
+
+            // Load tasks from localStorage
+            function loadTasks() {
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+                tasks.forEach(task => {
+                    addTaskToDOM(task.text, task.completed);
+                });
+            }
+
+            // Save tasks to localStorage
+            function saveTasks() {
+                const tasks = [];
+                document.querySelectorAll('#todo-items li').forEach(li => {
+                    tasks.push({
+                        text: li.querySelector('span').textContent,
+                        completed: li.classList.contains('completed')
+                    });
+                });
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
+
+            // Add new task to DOM
+            function addTaskToDOM(taskText, isCompleted = false) {
+                const li = document.createElement('li');
+                if (isCompleted) li.classList.add('completed');
+                
+                li.innerHTML = `
+                    <span>${taskText}</span>
+                    <button>Delete</button>
+                `;
+                
+                // Toggle completion
+                li.querySelector('span').addEventListener('click', function() {
+                    li.classList.toggle('completed');
+                    saveTasks();
+                });
+                
+                // Delete task
+                li.querySelector('button').addEventListener('click', function() {
+                    li.remove();
+                    saveTasks();
+                });
+                
+                todoItems.appendChild(li);
+            }
+
+            // Add new task
+            addBtn.addEventListener('click', function() {
+                const taskText = todoInput.value.trim();
+                if (taskText) {
+                    addTaskToDOM(taskText);
+                    todoInput.value = '';
+                    saveTasks();
+                }
+            });
+
+            // Allow adding tasks with Enter key
+            todoInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addBtn.click();
+                }
+            });
+
+            // Initialize
+            loadTasks();
+        });
+    </script>
+
     </section>
 
+    <section id="fortune-generator">
+	<h2>Fortune Generator</h2>
+    		<div id="fortune-box">
+        	<p id="fortune-text">Your fortune will appear here!</p>
+    		</div>
+    		<div id="fortune-controls">
+        		<button class="color-btn" id="red-btn"></button>
+        		<button class="color-btn" id="blue-btn"></button>
+        		<button class="color-btn" id="green-btn"></button>
+        		<button class="color-btn" id="yellow-btn"></button>
+    		</div>
+
+    <style>
+        #fortune-generator {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        #fortune-box {
+            padding: 30px;
+            border: 3px solid #b8a9c9;
+            background-color: #ffffff;
+            min-width: 300px;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        #fortune-text {
+            margin: 0;
+            font-size: 18px;
+            color: #555555;
+            transition: all 0.3s ease;
+        }
+
+        #fortune-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 40px);
+            grid-gap: 10px;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #red-btn { background-color: #f4a7b9; }
+        #blue-btn { background-color: #a2d5c6; }
+        #green-btn { background-color: #b8d8a9; }
+        #yellow-btn { background-color: #f8e58c; }
+    </style>
+
+    <script>
+        // Fortune Generator
+        const fortunes = [
+            "True wisdom comes not from knowledge, but from understanding.",
+            "Don't hold onto things that require a tight grip.",
+            "I didn't come this far to only come this far.",
+            "Vulnerability sounds like faith and looks like courage.",
+            "And into the forest I go, to lose my mind and find my soul.",
+            "Do it scared.",
+            "Look how far you've come.",
+            "Each time you break your own boundaries to ensure that someone else likes you, you like yourself a little less.",
+            "Sitting in silence with you is all the noise I need.",
+            "There is nothing stronger than a broken woman who has rebuilt herself."
+        ];
+
+        const fortuneBox = document.getElementById('fortune-box');
+        const fortuneText = document.getElementById('fortune-text');
+
+        function getRandomFortune() {
+            const randomIndex = Math.floor(Math.random() * fortunes.length);
+            fortuneText.textContent = fortunes[randomIndex];
+        }
+
+        function changeTheme(color) {
+            switch(color) {
+                case 'red':
+                    fortuneText.style.color = '#d64550';
+                    fortuneBox.style.backgroundColor = '#fff5f6';
+                    fortuneBox.style.borderColor = '#f4a7b9';
+                    break;
+                case 'blue':
+                    fortuneText.style.color = '#2c3e50';
+                    fortuneBox.style.backgroundColor = '#f0f9f7';
+                    fortuneBox.style.borderColor = '#a2d5c6';
+                    break;
+                case 'green':
+                    fortuneText.style.color = '#2e5e3b';
+                    fortuneBox.style.backgroundColor = '#f5f9f4';
+                    fortuneBox.style.borderColor = '#b8d8a9';
+                    break;
+                case 'yellow':
+                    fortuneText.style.color = '#5e532e';
+                    fortuneBox.style.backgroundColor = '#fffdf2';
+                    fortuneBox.style.borderColor = '#f8e58c';
+                    break;
+            }
+        }
+
+        document.getElementById('red-btn').addEventListener('click', () => changeTheme('red'));
+        document.getElementById('blue-btn').addEventListener('click', () => changeTheme('blue'));
+        document.getElementById('green-btn').addEventListener('click', () => changeTheme('green'));
+        document.getElementById('yellow-btn').addEventListener('click', () => changeTheme('yellow'));
+
+        // Initialize
+        getRandomFortune();
+    </script>
+
+    </section>
 
     <!-- Contact Form Section -->
     <section id="contact">
