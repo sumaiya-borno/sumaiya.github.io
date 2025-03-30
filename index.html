@@ -389,6 +389,7 @@
 
     <section id="fortune-generator">
 	<h2>Fortune Generator</h2>
+	       <div id="fortune-container">
     		<div id="fortune-box">
         	<p id="fortune-text">Your fortune will appear here!</p>
     		</div>
@@ -401,11 +402,20 @@
 
     <style>
         #fortune-generator {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin: 2rem 0;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           margin: 2rem auto;
+           max-width: 800px;
+           padding: 20px;
         }
+	    
+        #fortune-container {
+    	    display: flex;
+    	    justify-content: center;
+    	    align-items: center;
+    	    gap: 20px;
+    	    width: 100%;
 
         #fortune-box {
             padding: 30px;
