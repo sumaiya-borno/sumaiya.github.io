@@ -52,7 +52,7 @@ document.getElementById('font-style-btn').addEventListener('click', () => {
 });
 
 // Load a random fortune on page load
-window.onload = getRandomFortune;
+window.addEventListener('load', getRandomFortune);
 
 // Stopwatch
 let timer;
